@@ -97,3 +97,13 @@ li{
     text-align:center;
 
 }
+
+.selected{
+
+    background:#0A84FF;
+
+    color:white;
+
+    border-radius:6px;
+
+}
