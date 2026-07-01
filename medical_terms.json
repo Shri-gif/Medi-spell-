@@ -1,4 +1,5 @@
-"ultrasound",
+ "ultrasound_terms":[
+  "ultrasound",
   "sonography",
   "echography",
   "doppler ultrasound",
@@ -292,7 +293,7 @@
   "vascular resistance",
   "flow reversal",
   "luminal narrowing",
-  "vascular occlusion" 
+  "vascular occlusion", 
   "thyroid gland",
   "right thyroid lobe",
   "left thyroid lobe",
@@ -392,7 +393,7 @@
   "cortical thickening",
   "fatty hilum",
   "hilum preservation",
-  "vascular hilum"
+  "vascular hilum", 
  "echocardiography",
   "transthoracic echocardiography",
   "transesophageal echocardiography",
