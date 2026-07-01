@@ -1,30 +1,16 @@
 import sys
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout
+from PySide6.QtWidgets import QApplication
+from ui.home import HomeWindow
 
 
-class MainWindow(QWidget):
-    def __init__(self):
-        super().__init__()
+def main():
+    app = QApplication(sys.argv)
 
-        self.setWindowTitle("MediSpellAI")
-        self.resize(900, 600)
+    window = HomeWindow()
+    window.show()
 
-        layout = QVBoxLayout()
-
-        title = QLabel("Welcome to MediSpellAI")
-        title.setStyleSheet("""
-            font-size:28px;
-            font-weight:bold;
-        """)
-
-        layout.addWidget(title)
-
-        self.setLayout(layout)
+    sys.exit(app.exec())
 
 
-app = QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-
-sys.exit(app.exec())
+if __name__ == "__main__":
+    main()
