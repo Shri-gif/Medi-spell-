@@ -1,3 +1,5 @@
+from speech.microphone import Microphone
+from PySide6.QtCore import Qt, QTimer
 from dictionary.search import MedicalDictionary
 
 from PySide6.QtWidgets import (
@@ -9,7 +11,6 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QListWidget
 )
-from PySide6.QtCore import Qt
 
 
 class HomeWindow(QWidget):
@@ -17,6 +18,7 @@ class HomeWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.dictionary = MedicalDictionary()
+        self.microphone = Microphone()
 
         self.setWindowTitle("MediSpellAI")
         self.resize(950, 700)
@@ -102,6 +104,7 @@ class HomeWindow(QWidget):
 
         self.micButton = QPushButton("🎤 Speak Now")
         self.micButton.setFixedHeight(55)
+        self.micButton.clicked.connect(self.start_listening)
 
         mainLayout.addWidget(self.micButton)
 
@@ -154,9 +157,9 @@ class HomeWindow(QWidget):
 
         mainLayout.addWidget(self.status)
 
-        self.setLayout(mainLayout)
-        
-            def search_medical_term(self):
+                self.setLayout(mainLayout)
+
+    def search_medical_term(self):
 
         text = self.searchBox.text()
 
@@ -165,3 +168,21 @@ class HomeWindow(QWidget):
         self.suggestionList.clear()
 
         self.suggestionList.addItems(results)
+
+    def start_listening(self):
+
+        self.microphone.start()
+
+        self.status.setText("🎤 Status : Listening...")
+
+        self.micButton.setEnabled(False)
+
+        QTimer.singleShot(2000, self.stop_listening)
+
+    def stop_listening(self):
+
+        self.microphone.stop()
+
+        self.status.setText("✅ Status : Ready")
+
+        self.micButton.setEnabled(True)
