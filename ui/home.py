@@ -157,7 +157,7 @@ class HomeWindow(QWidget):
 
         mainLayout.addWidget(self.status)
 
-                self.setLayout(mainLayout)
+        self.setLayout(mainLayout)
 
     def search_medical_term(self):
 
