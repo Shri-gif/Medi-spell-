@@ -1,3 +1,5 @@
+from dictionary.search import MedicalDictionary
+
 from PySide6.QtWidgets import (
     QWidget,
     QLabel,
@@ -14,6 +16,7 @@ class HomeWindow(QWidget):
 
     def __init__(self):
         super().__init__()
+        self.dictionary = MedicalDictionary()
 
         self.setWindowTitle("MediSpellAI")
         self.resize(950, 700)
@@ -88,6 +91,7 @@ class HomeWindow(QWidget):
 
         self.searchBox = QLineEdit()
         self.searchBox.setPlaceholderText("Search here...")
+        self.searchBox.textChanged.connect(self.search_medical_term)
 
         mainLayout.addWidget(searchLabel)
         mainLayout.addWidget(self.searchBox)
@@ -151,3 +155,13 @@ class HomeWindow(QWidget):
         mainLayout.addWidget(self.status)
 
         self.setLayout(mainLayout)
+        
+            def search_medical_term(self):
+
+        text = self.searchBox.text()
+
+        results = self.dictionary.search(text)
+
+        self.suggestionList.clear()
+
+        self.suggestionList.addItems(results)
