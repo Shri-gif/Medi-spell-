@@ -35,8 +35,9 @@ let words = [];
 fetch("medical_terms.json")
   .then(response => response.json())
   .then(data => {
-    words = data;
-  })
+    words = data.ultrasound_terms; // ✅ FIX
+})
+    
   .catch(error => {
     console.error("Dictionary load failed:", error);
   });
