@@ -36,15 +36,41 @@ fetch("medical_terms.json")
     console.error("Dictionary load failed:", error);
   });
 
+function similarity(a, b) {
+
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+
+    let score = 0;
+
+    for (let i = 0; i < Math.min(a.length, b.length); i++) {
+
+        if (a[i] === b[i]) {
+            score++;
+        }
+
+    }
+
+    return score / Math.max(a.length, b.length);
+
+}
+
 function showSuggestions(text) {
 
     suggestionList.innerHTML = "";
 
     if (text === "") return;
 
-    const results = words.filter(word =>
-        word.toLowerCase().startsWith(text.toLowerCase())
+    const results = words.filter(word => {
+
+    const lower = word.toLowerCase();
+
+    return (
+        lower.startsWith(text.toLowerCase()) ||
+        similarity(lower, text.toLowerCase()) > 0.6
     );
+
+});
 
     results.forEach(word => {
 
