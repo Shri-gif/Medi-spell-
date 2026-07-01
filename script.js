@@ -2,22 +2,27 @@ const searchBox = document.getElementById("searchBox");
 const suggestionList = document.getElementById("suggestionList");
 const micButton = document.getElementById("micButton");
 const status = document.getElementById("status");
+const reportBox = document.getElementById("reportBox");
+const copyButton = document.getElementById("copyButton");
+const downloadButton = document.getElementById("downloadButton");
 
 const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
 let recognition = null;
-
 if (SpeechRecognition) {
 
     recognition = new SpeechRecognition();
 
     recognition.lang = "en-US";
-    recognition.interimResults = false;
+
+    recognition.continuous = true;
+
+    recognition.interimResults = true;
+
     recognition.maxAlternatives = 1;
 
 }
-
 const favoriteList = document.getElementById("favoriteList");
 const historyList = document.getElementById("historyList");
 
@@ -174,16 +179,23 @@ micButton.addEventListener("click", () => {
 // 6. Voice Result  ← YAHAN ADD KARO
 if (recognition) {
 
-    recognition.onresult = function(event) {
-      const spokenText = event.results[0][0].transcript.trim(); 
+    recognition.onresult = function(event){
 
-        searchBox.value = spokenText;
+    let transcript = "";
 
-        showSuggestions(spokenText);
+    for(let i = event.resultIndex; i < event.results.length; i++){
 
-        status.textContent = "✅ Ready";
+        transcript += event.results[i][0].transcript;
 
-    };
+    }
+
+    reportBox.value += transcript + " ";
+
+    searchBox.value = transcript.trim();
+
+    showSuggestions(transcript.trim());
+
+};
 
     recognition.onerror = function() {
 
