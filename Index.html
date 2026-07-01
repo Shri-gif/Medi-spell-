@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSpell AI</title>
 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🩺 MediSpell AI</h1>
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search Medical Term..."
+    >
+
+    <button id="micButton">
+        🎤 Speak
+    </button>
+
+    <h2>Suggestions</h2>
+
+    <ul id="suggestionList">
+
+    </ul>
+
+    <h2>Favorites</h2>
+
+    <ul id="favoriteList">
+        <li>Liver</li>
+        <li>Kidney</li>
+        <li>Pancreas</li>
+        <li>Gall Bladder</li>
+    </ul>
+
+    <p id="status">
+        Status : Ready
+    </p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
