@@ -61,7 +61,7 @@ function showSuggestions(text) {
 
     if (text === "") return;
 
-    const results = words.filter(word => {
+const results = words.filter(word => {
 
     const lower = word.toLowerCase();
 
@@ -71,6 +71,7 @@ function showSuggestions(text) {
     );
 
 });
+
 
     results.forEach(word => {
 
