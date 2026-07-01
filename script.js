@@ -179,36 +179,35 @@ micButton.addEventListener("click", () => {
 // 6. Voice Result  ← YAHAN ADD KARO
 if (recognition) {
 
-    recognition.onresult = function(event){
+    recognition.onresult = function(event) {
 
     let transcript = "";
 
-    for(let i = event.resultIndex; i < event.results.length; i++){
+    // Collect all new speech results
+    for (let i = event.resultIndex; i < event.results.length; i++) {
 
         transcript += event.results[i][0].transcript;
 
     }
 
-    reportBox.value += transcript + " ";
+    transcript = transcript.trim();
 
-    searchBox.value = transcript.trim();
+    // Show latest spoken text in search box
+    searchBox.value = transcript;
 
-    showSuggestions(transcript.trim());
+    // Update suggestions
+    showSuggestions(transcript);
+
+    // Add only final recognized text to report
+    if (event.results[event.results.length - 1].isFinal) {
+
+        reportBox.value += transcript + " ";
+
+    }
+
+    status.textContent = "🎤 Listening...";
 
 };
-
-    recognition.onerror = function() {
-
-        status.textContent = "❌ Microphone Error";
-
-    };
-
-    recognition.onend = function() {
-
-        status.textContent = "✅ Ready";
-
-    };
-
 }
 
 searchBox.addEventListener("keydown", (event) => {
