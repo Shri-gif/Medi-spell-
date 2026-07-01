@@ -163,3 +163,6 @@ if (recognition) {
     };
 
 }
+
+loadFavorites();
+loadHistory();
