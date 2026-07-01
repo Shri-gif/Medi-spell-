@@ -101,6 +101,14 @@ const results = words.filter(word => {
 
         });
 
+        li.addEventListener("click", () => {
+
+    searchBox.value = word;
+
+    suggestionList.innerHTML = "";
+
+});
+
         suggestionList.appendChild(li);
 
     });
@@ -191,5 +199,54 @@ if (recognition) {
 
 }
 
+searchBox.addEventListener("keydown", (event) => {
+
+    const items = suggestionList.querySelectorAll("li");
+
+    if (items.length === 0) return;
+
+    let selected = suggestionList.querySelector(".selected");
+
+    let index = Array.from(items).indexOf(selected);
+
+    if (event.key === "ArrowDown") {
+
+        event.preventDefault();
+
+        if (selected) selected.classList.remove("selected");
+
+        index = (index + 1) % items.length;
+
+        items[index].classList.add("selected");
+
+    }
+
+    if (event.key === "ArrowUp") {
+
+        event.preventDefault();
+
+        if (selected) selected.classList.remove("selected");
+
+        index = (index - 1 + items.length) % items.length;
+
+        items[index].classList.add("selected");
+
+    }
+
+    if (event.key === "Enter") {
+
+        if (selected) {
+
+            searchBox.value = selected.textContent;
+
+            suggestionList.innerHTML = "";
+
+        }
+
+    }
+
+});
+
 loadFavorites();
 loadHistory();
+
