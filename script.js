@@ -2,6 +2,7 @@ const searchBox = document.getElementById("searchBox");
 const suggestionList = document.getElementById("suggestionList");
 const micButton = document.getElementById("micButton");
 const status = document.getElementById("status");
+
 const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -12,12 +13,16 @@ if (SpeechRecognition) {
     recognition = new SpeechRecognition();
 
     recognition.lang = "en-US";
-
     recognition.interimResults = false;
-
     recognition.maxAlternatives = 1;
 
 }
+
+const favoriteList = document.getElementById("favoriteList");
+const historyList = document.getElementById("historyList");
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let history = JSON.parse(localStorage.getItem("history")) || [];
 
 let words = [];
 
@@ -47,7 +52,61 @@ function showSuggestions(text) {
 
         li.textContent = word;
 
+        li.addEventListener("click", () => {
+
+            if (!favorites.includes(word)) {
+
+                favorites.push(word);
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+
+                loadFavorites();
+
+            }
+
+            history.unshift(word);
+
+            history = history.slice(0, 10);
+
+            localStorage.setItem("history", JSON.stringify(history));
+
+            loadHistory();
+
+        });
+
         suggestionList.appendChild(li);
+
+    });
+
+}
+
+function loadFavorites() {
+
+    favoriteList.innerHTML = "";
+
+    favorites.forEach(item => {
+
+        const li = document.createElement("li");
+
+        li.textContent = item;
+
+        favoriteList.appendChild(li);
+
+    });
+
+}
+
+function loadHistory() {
+
+    historyList.innerHTML = "";
+
+    history.forEach(item => {
+
+        const li = document.createElement("li");
+
+        li.textContent = item;
+
+        historyList.appendChild(li);
 
     });
 
