@@ -58,35 +58,41 @@ function showSuggestions(text) {
 
     suggestionList.innerHTML = "";
 
-    if (text === "") return;
+    if (text.trim() === "") return;
+
+    const query = text.toLowerCase().trim();
 
     const results = words.filter(word => {
 
-    const lower = word.toLowerCase();
+        const lower = word.toLowerCase();
 
-    return query.split(" ").every(w => lower.includes(w));
+        return (
+            lower.includes(query) ||
+            query.includes(lower) ||
+            query.split(" ").every(w => lower.includes(w))
+        );
 
-});
+    });
 
     results.forEach(word => {
 
         const li = document.createElement("li");
 
         li.textContent = word;
+
         li.addEventListener("click", () => {
 
-    searchBox.value = word;
+            searchBox.value = word;
 
-    suggestionList.innerHTML = "";
+            suggestionList.innerHTML = "";
 
-});
+        });
 
         suggestionList.appendChild(li);
 
     });
 
 }
-
 // Live search
 searchBox.addEventListener("input", () => {
 
