@@ -58,7 +58,7 @@ function showSuggestions(text) {
 
     suggestionList.innerHTML = "";
 
-    if (text.trim() === "") return;
+    if (!text.trim()) return;
 
     const query = text.toLowerCase().trim();
 
@@ -67,26 +67,26 @@ function showSuggestions(text) {
         const lower = word.toLowerCase();
 
         return (
+            lower.startsWith(query) ||
             lower.includes(query) ||
-            query.includes(lower) ||
-            query.split(" ").every(w => lower.includes(w))
+            similarity(lower, query) >= 0.4
         );
 
     });
 
-    results.forEach(word => {
+    results.slice(0, 15).forEach(word => {
 
         const li = document.createElement("li");
 
         li.textContent = word;
 
-        li.addEventListener("click", () => {
+        li.onclick = () => {
 
             searchBox.value = word;
 
             suggestionList.innerHTML = "";
 
-        });
+        };
 
         suggestionList.appendChild(li);
 
