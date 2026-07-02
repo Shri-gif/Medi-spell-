@@ -1,60 +1,53 @@
 const searchBox = document.getElementById("searchBox");
-
 const suggestionList = document.getElementById("suggestionList");
-
 const micButton = document.getElementById("micButton");
-
 const status = document.getElementById("status");
 
-const words = [
+let words = [];
 
-"Hepatomegaly",
+// JSON file load
+fetch("medical_terms.json")
+  .then(response => response.json())
+  .then(data => {
+    words = data;
+  })
+  .catch(error => {
+    console.error("Dictionary load failed:", error);
+  });
 
-"Hypoechoic",
+// Live search
+searchBox.addEventListener("input", () => {
 
-"Cholelithiasis",
+  suggestionList.innerHTML = "";
 
-"Hydronephrosis",
+  const text = searchBox.value.toLowerCase().trim();
 
-"Liver",
+  if(text === "") return;
 
-"Kidney",
+  const results = words.filter(word =>
+      word.toLowerCase().startsWith(text)
+  );
 
-"Pancreas",
+  results.forEach(word => {
 
-"Gall Bladder"
+      const li = document.createElement("li");
 
-];
+      li.textContent = word;
 
-searchBox.addEventListener("input",()=>{
+      suggestionList.appendChild(li);
 
-    suggestionList.innerHTML="";
-
-    const text=searchBox.value.toLowerCase();
-
-    words.forEach(word=>{
-
-        if(word.toLowerCase().startsWith(text)){
-
-            const li=document.createElement("li");
-
-            li.textContent=word;
-
-            suggestionList.appendChild(li);
-
-        }
-
-    });
+  });
 
 });
 
-micButton.addEventListener("click",()=>{
+// Fake microphone
+micButton.addEventListener("click", () => {
 
-    status.textContent="🎤 Status : Listening...";
+    status.textContent = "🎤 Listening...";
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
-        status.textContent="✅ Status : Ready";
+        status.textContent = "✅ Ready";
 
     },2000);
 
