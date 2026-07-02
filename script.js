@@ -60,9 +60,13 @@ function showSuggestions(text) {
 
     if (text === "") return;
 
-    const results = words.filter(word =>
-    word.toLowerCase().includes(text.toLowerCase())
-);
+    const results = words.filter(word => {
+
+    const lower = word.toLowerCase();
+
+    return query.split(" ").every(w => lower.includes(w));
+
+});
 
     results.forEach(word => {
 
