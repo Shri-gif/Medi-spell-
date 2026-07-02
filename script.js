@@ -60,19 +60,19 @@ function showSuggestions(text) {
 
     if (!text.trim()) return;
 
-    const query = text.toLowerCase().trim();
+    const query = text.toLowerCase();
 
-    const results = words.filter(word => {
+const results = words.filter(word => {
 
-        const lower = word.toLowerCase();
+    const lower = word.toLowerCase();
 
-        return (
-            lower.startsWith(query) ||
-            lower.includes(query) ||
-            similarity(lower, query) >= 0.4
-        );
+    return (
+        lower.includes(query) ||
+        query.includes(lower) ||
+        similarity(lower, query) > 0.4
+    );
 
-    });
+});
 
     results.slice(0, 15).forEach(word => {
 
