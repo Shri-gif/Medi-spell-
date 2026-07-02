@@ -26,9 +26,13 @@ fetch("medical_terms.json")
   .then(response => response.json())
   .then(data => {
     words = data;
+
+    console.log(words);
+    alert("Loaded " + words.length + " terms");
   })
   .catch(error => {
-    console.error("Dictionary load failed:", error);
+    console.error(error);
+    alert("JSON Error");
   });
 
 function similarity(a, b) {
@@ -56,16 +60,9 @@ function showSuggestions(text) {
 
     if (text === "") return;
 
-    const results = words.filter(word => {
-
-    const lower = word.toLowerCase();
-
-    return (
-        lower.startsWith(text.toLowerCase()) ||
-        similarity(lower, text.toLowerCase()) > 0.6
-    );
-
-});
+    const results = words.filter(word =>
+    word.toLowerCase().includes(text.toLowerCase())
+);
 
     results.forEach(word => {
 
